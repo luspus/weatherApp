@@ -26,17 +26,9 @@ const updateCurrentTempForCity = (obj) => dispatch => {
     })
 }
 
-const saveCitiesList = (arr) => dispatch => {
-    dispatch({
-        type: 'SAVE_CITIES_LIST',
-        payload: arr
-    })
-}
-
 export default {
-  addNewForecast,
-  deleteCityForecast,
-  updateCurrentTempForCity,
-  updateForecastList,
-  saveCitiesList
+    addNewForecast,
+    deleteCityForecast,
+    updateCurrentTempForCity,
+    updateForecastList
 };
