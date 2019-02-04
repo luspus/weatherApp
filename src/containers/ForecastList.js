@@ -1,25 +1,15 @@
 import React, { Component }  from 'react'
 import { connect } from 'react-redux'
-import ACTIONS from '../actions/index'
+import ACTIONS from '../actions'
 
 class ForecastList extends Component {
-    updateCurrentTempForCity(id, city) {
-        fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=bede7e2252f7c2536f37e5273ba92b71&units=metric`)
-        .then(response => response.json())
-        .then(data => {
-            this.props.updateCurrentTempForCity([data, id])
-        })
-        .catch(error => {
-          alert('There has been a problem with your fetch operation: ' + error.message);
-        })
-    }
     render () {
-        let arr = this.props.forecastList
+        let forecastList = this.props.forecastList
         return(
             <div>
-                {arr.length > 0 && 
+                {forecastList.length > 0 &&
                     <ul className='forecastList'>
-                        {arr.map((i, id) => {
+                        {forecastList.map((i, id) => {
                             return (
                                 <li className='forecastList_item' key={id}>
                                     <div>
@@ -34,7 +24,7 @@ class ForecastList extends Component {
                                         <p>Geo coords: 
                                             <span>[{i.coord.lat}, {i.coord.lon}]</span>
                                         </p>
-                                        <button onClick={() => this.updateCurrentTempForCity(id, i.name)}>Update temperature</button>
+                                        <button onClick={() => this.props.updateCurrentTempForCity([id, i.name])}>Update temperature</button>
                                         <button onClick={() => this.props.deleteCityForecast(id)}>Delete city forecast</button>
                                     </div>
                                 </li> 
@@ -47,15 +37,15 @@ class ForecastList extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    ...state
-})
+const mapStateToProps = state => {
+    return {
+     forecastList: state.forecastList
+    }
+}
 
 const mapDispatchToProps = dispatch => ({
-    addNewForecast: (data) => dispatch(ACTIONS.addNewForecast(data)),
-    deleteCityForecast: (data) => dispatch(ACTIONS.deleteCityForecast(data)),
+    deleteCityForecast: (id) => dispatch(ACTIONS.deleteCityForecast(id)),
     updateCurrentTempForCity: (data) => dispatch(ACTIONS.updateCurrentTempForCity(data))
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForecastList)

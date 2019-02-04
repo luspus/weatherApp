@@ -10,25 +10,28 @@ export default (state = initialState, action) => {
             }
 
         case 'DELETE_CITY_FORECAST':
-            const newArr = state.forecastList
-            newArr.splice(+action.payload, 1 )
+            const newArr = state.forecastList,
+                  id = +action.payload
+            newArr.splice(id, 1 )
             return {
                 ...state,
-               forecastList: [...newArr]
+                forecastList: [...newArr]
             }
 
         case 'UPDATE_CURRENT_TEMP_FOR_CITY':
-            const newArray = state.forecastList
-            newArray[+action.payload[1]] = action.payload[0]
+            const newArray = state.forecastList,
+                  index = +action.payload[1],
+                  obj = action.payload[0]
+            newArray[index] = obj
             return {
                 ...state,
-               forecastList: [...newArray]
+                forecastList: [...newArray]
             }
 
-        case 'UPDATE_FORECAST_LIST':
+        case 'SET_FORECAST_LIST':
             return {
                 ...state,
-               forecastList: action.payload
+                forecastList: action.payload
             }
 
         default:
