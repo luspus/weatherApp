@@ -1,74 +1,53 @@
-const addNewForecast = (arr) => dispatch => {
-    const inputAutocomplete = () => {
+const key = '4404d2f5ff44af76585b0d45e25f087d';
+const href = 'https://ws.audioscrobbler.com';
+
+const getTopArtists = () => dispatch => {
+    const asyncGetTopArtists = () => {
+      const country = 'ukraine';
+      const page = '';
+      const limit = '100';
+      console.log(typeof(page), typeof(limit))
         return dispatch => {
-            let addressObject = arr[0].autocomplete.getPlace(),
-                address = addressObject.address_components,
-                city = arr[1]
-            if (address) {
-                fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=bede7e2252f7c2536f37e5273ba92b71&units=metric`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.cod === '404') {
-                            alert(data.cod + ':' + data.message)
-                        } else {
-                            dispatch({ type: 'ADD_NEW_FORECAST', payload: data })
-                        }
-                    })
-                    .catch(errors => {
-                        alert(errors)
-                    })
-            } else {
-                alert('adress invalid')
-            }
+          fetch(`${href}/2.0/?method=geo.gettopartists&country=ukraine&limit=${limit}&page=${page}&api_key=${key}&format=json`)
+              .then(response => response.json())
+              .then(req => {
+                //  console.log(req)
+                  const data = req.topartists.artist;
+                  dispatch({ type: 'GET_TOP_ARTISTS', data })
+
+              })
+              .catch(errors => {
+                //  console.log(errors)
+              })
         }
     }
-    dispatch(inputAutocomplete())
+    dispatch(asyncGetTopArtists())
 }
 
-const deleteCityForecast = (obj) => dispatch => {
-    dispatch({
-        type: 'DELETE_CITY_FORECAST',
-        payload: obj
-    })
-}
 
-const setForecastList = (arr) => dispatch => {
-    const asyncGetForecast = () => {
+const getInfo = (artist) => dispatch => {
+    const asyncGetMoreInfo = () => {
+      const name = artist;
+      const limit = '100';
         return dispatch => {
-            fetch(`http://api.openweathermap.org/data/2.5/group?id=${arr}&APPID=bede7e2252f7c2536f37e5273ba92b71&units=metric`,
-                { cors: 'no-cors' })
-                .then(response => response.json())
-                .then(data => {
-                    dispatch({ type: 'SET_FORECAST_LIST', payload: data.list })
-                })
-                .catch(error => {
-                    alert('There has been a problem with your fetch operation: ' + error.message);
-                })
-        }
-   }
-    dispatch(asyncGetForecast());
-}
+          fetch(`${href}/2.0/?method=artist.getinfo&artist=${name}&api_key=${key}&format=json`)
+              .then(response => response.json())
+              .then(req => {
+              //    console.log(req)
+                  const data = req;
+                  dispatch({ type: 'GET_INFO', data })
 
-const updateCurrentTempForCity = (arr) => dispatch => {
-    const getCityForecast = () => {
-        const city = arr[1]
-        return dispatch => {
-            fetch(`http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=bede7e2252f7c2536f37e5273ba92b71&units=metric`)
-                .then(response => response.json())
-                .then(data => {
-                    dispatch({ type: 'UPDATE_CURRENT_TEMP_FOR_CITY', payload: arr });
-                })
-                .catch(error => {
-                    alert('There has been a problem with your fetch operation: ' + error.message);
-                })
+              })
+              .catch(errors => {
+                  //console.log(errors)
+              })
         }
     }
-    dispatch(getCityForecast());
+    dispatch(asyncGetMoreInfo())
 }
+
 
 export default {
-    addNewForecast,
-    deleteCityForecast,
-    updateCurrentTempForCity,
-    setForecastList
+    getTopArtists,
+    getInfo
 };
