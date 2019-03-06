@@ -8,12 +8,8 @@ class TopArtists extends Component {
     componentDidMount () {
        this.props.getTopArtists()
     }
-    handlePageClick = (e) => {
-      console.log(e)
-    }
     render () {
       const { topArtists, getInfo, artistInfo } = this.props;
-      console.log(this.props)
       return(
           <ul>
               {topArtists.map((item, id) => {

@@ -1,6 +1,8 @@
 const initialState = {
     topArtists: [],
-    artistInfo: []
+    artistInfo: [],
+    val: '',
+    resultOfSearching: []
 }
 export default (state = initialState, action) => {
     switch (action.type) {
@@ -11,11 +13,17 @@ export default (state = initialState, action) => {
             }
 
         case 'GET_INFO':
-                console.log('artistInfo reducer', action.data.artist)
                 return {
                     ...state,
-                    artistInfo: action.data.artist
+                    artistInfo: [action.data.artist]
                 }
+
+          case 'SEARCH_ARTIST':
+                  console.log('artistInfo reducer', action)
+                  return {
+                      ...state,
+                      resultOfSearching: []
+                  }
 
         default:
             return state

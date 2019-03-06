@@ -1,10 +1,6 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ACTIONS from '../actions/'
 
 class Artist extends Component {
@@ -13,8 +9,14 @@ class Artist extends Component {
     }
     render () {
         const { artistInfo } = this.props;
+        console.log(artistInfo)
         return(
-          <div>{artistInfo.name}</div>
+          <div>
+          <Link to='/'> Return </Link>
+          {artistInfo[0] != undefined &&
+            <div>{artistInfo[0].bio.summary}</div>
+          }
+          </div>
         )
     }
 }

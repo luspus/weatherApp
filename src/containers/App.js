@@ -1,37 +1,22 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import TopArtists from './TopArtists';
+import SearchAutocomplete from './SearchAutocomplete';
+import Artist from './Artist';
 
-import TopArtists from './TopArtists'
-import Artist from './Artist'
-
-class App extends Component {
-    render () {
-      const { artistInfo } = this.props;
-      //console.log(99999999999, this.props, artistInfo.name)
-      return(
+const App = () => {
+    return(
+        <div>
+          <SearchAutocomplete />
           <Router>
             <div>
                   <Route exact path="/" component={TopArtists} />
                   <Route exact path='/:artist' component={Artist} />
             </div>
           </Router>
-        )
-    }
+      </div>
+      )
 }
 
-const mapStateToProps = state => {
-    //console.log(state)
-    return {
-        artistInfo: state.artistInfo
-    }
-}
-
-const mapDispatchToProps = dispatch => ({
-})
-
-export default connect(mapStateToProps, mapDispatchToProps) (App)
+export default App
