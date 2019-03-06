@@ -7,7 +7,7 @@ const getTopArtists = () => dispatch => {
       const page = '';
       const limit = '100';
       console.log(typeof(page), typeof(limit))
-        return dispatch => {
+      return dispatch => {
           fetch(`${href}/2.0/?method=geo.gettopartists&country=ukraine&limit=${limit}&page=${page}&api_key=${key}&format=json`)
               .then(response => response.json())
               .then(req => {
@@ -24,22 +24,21 @@ const getTopArtists = () => dispatch => {
     dispatch(asyncGetTopArtists())
 }
 
-
 const getInfo = (artist) => dispatch => {
     const asyncGetMoreInfo = () => {
       const name = artist;
       const limit = '100';
-        return dispatch => {
+      return dispatch => {
           fetch(`${href}/2.0/?method=artist.getinfo&artist=${name}&api_key=${key}&format=json`)
               .then(response => response.json())
               .then(req => {
-              //    console.log(req)
+                 console.log('ACTION', req)
                   const data = req;
                   dispatch({ type: 'GET_INFO', data })
 
               })
               .catch(errors => {
-                  //console.log(errors)
+                  console.log(errors)
               })
         }
     }

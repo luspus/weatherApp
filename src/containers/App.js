@@ -8,17 +8,16 @@ import {
 
 import TopArtists from './TopArtists'
 import Artist from './Artist'
-import ACTIONS from '../actions/'
 
 class App extends Component {
     render () {
       const { artistInfo } = this.props;
-      console.log(99999999999, this.props, artistInfo.name)
+      //console.log(99999999999, this.props, artistInfo.name)
       return(
           <Router>
             <div>
                   <Route exact path="/" component={TopArtists} />
-                  <Route exact path='/radiohead' ololo={'3'} component={Artist} />
+                  <Route exact path='/:artist' component={Artist} />
             </div>
           </Router>
         )
@@ -26,7 +25,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+    //console.log(state)
     return {
         artistInfo: state.artistInfo
     }

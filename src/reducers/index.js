@@ -5,7 +5,6 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'GET_TOP_ARTISTS':
-        //console.log(action)
             return {
                 ...state,
                 topArtists: [...action.data]
@@ -15,7 +14,7 @@ export default (state = initialState, action) => {
                 console.log('artistInfo reducer', action.data.artist)
                 return {
                     ...state,
-                    artistInfo: [...action.data.artist]
+                    artistInfo: action.data.artist
                 }
 
         default:

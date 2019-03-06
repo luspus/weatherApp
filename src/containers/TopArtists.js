@@ -24,7 +24,7 @@ class TopArtists extends Component {
                             <Link to={`/${item.name.toLowerCase()}`}>
                                 {item.name}
                             </Link>
-                            <div>3199</div>
+                            <div></div>
                             <img size="medium" src={val} alt={item.name} />
                           </div>
                   </li>
@@ -36,16 +36,13 @@ class TopArtists extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
     return {
         topArtists: state.topArtists,
-        artistInfo: state.artistInfo
     }
 }
 
 const mapDispatchToProps = dispatch => ({
     getTopArtists: () => dispatch(ACTIONS.getTopArtists()),
-    getInfo: (artist) => dispatch(ACTIONS.getInfo(artist))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopArtists)

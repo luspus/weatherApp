@@ -9,20 +9,17 @@ import ACTIONS from '../actions/'
 
 class Artist extends Component {
     componentDidMount () {
-      console.log('MOUNTED', console.log(this.props))
-      this.props.getInfo('radiohead')
+        this.props.getInfo(this.props.match.params.artist);
     }
     render () {
-      const { artistInfo } = this.props;
-      console.log('RENDER', this.props)
-      return(
-        <div>  ARTIIIIIIIIIIIIIIIIIIIST</div>
+        const { artistInfo } = this.props;
+        return(
+          <div>{artistInfo.name}</div>
         )
     }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
     return {
         artistInfo: state.artistInfo
     }
@@ -32,4 +29,4 @@ const mapDispatchToProps = dispatch => ({
     getInfo: (artist) => dispatch(ACTIONS.getInfo(artist))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps) (Artist)
+export default connect(mapStateToProps, mapDispatchToProps)(Artist)
